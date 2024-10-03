@@ -22,9 +22,9 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: AppRoutes.initial,
       routes: {
-        AppRoutes.initial: (context) => InitialPage(),
+        //AppRoutes.initial: (context) => InitialPage(),
         AppRoutes.home: (context) => HomePage(),  // Certifique-se que HomePage está importada
-        AppRoutes.history: (context) => HistoryPage(),  // Certifique-se que HistoryPage está importada
+        //AppRoutes.history: (context) => HistoryPage(),  // Certifique-se que HistoryPage está importada
       },
     );
   }

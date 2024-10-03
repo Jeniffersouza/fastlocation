@@ -41,6 +41,22 @@ mixin _$HomeController on _HomeControllerBase, Store {
     });
   }
 
+  late final _$errorMessageAtom =
+      Atom(name: '_HomeControllerBase.errorMessage', context: context);
+
+  @override
+  String get errorMessage {
+    _$errorMessageAtom.reportRead();
+    return super.errorMessage;
+  }
+
+  @override
+  set errorMessage(String value) {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
+      super.errorMessage = value;
+    });
+  }
+
   late final _$addressesAtom =
       Atom(name: '_HomeControllerBase.addresses', context: context);
 
@@ -57,6 +73,22 @@ mixin _$HomeController on _HomeControllerBase, Store {
     });
   }
 
+  late final _$addressHistoryAtom =
+      Atom(name: '_HomeControllerBase.addressHistory', context: context);
+
+  @override
+  ObservableList<AddressModel> get addressHistory {
+    _$addressHistoryAtom.reportRead();
+    return super.addressHistory;
+  }
+
+  @override
+  set addressHistory(ObservableList<AddressModel> value) {
+    _$addressHistoryAtom.reportWrite(value, super.addressHistory, () {
+      super.addressHistory = value;
+    });
+  }
+
   late final _$fetchAddressAsyncAction =
       AsyncAction('_HomeControllerBase.fetchAddress', context: context);
 
@@ -65,12 +97,28 @@ mixin _$HomeController on _HomeControllerBase, Store {
     return _$fetchAddressAsyncAction.run(() => super.fetchAddress(cepInput));
   }
 
+  late final _$_HomeControllerBaseActionController =
+      ActionController(name: '_HomeControllerBase', context: context);
+
+  @override
+  void updateHistory(AddressModel address) {
+    final _$actionInfo = _$_HomeControllerBaseActionController.startAction(
+        name: '_HomeControllerBase.updateHistory');
+    try {
+      return super.updateHistory(address);
+    } finally {
+      _$_HomeControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
 cep: ${cep},
 isLoading: ${isLoading},
-addresses: ${addresses}
+errorMessage: ${errorMessage},
+addresses: ${addresses},
+addressHistory: ${addressHistory}
     ''';
   }
 }
