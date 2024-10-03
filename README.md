@@ -26,3 +26,4 @@ Siga os passos abaixo para clonar e executar o projeto:
    ```bash
    flutter run
 !Screenshot_1.png!
+<img src="https://github.com/Jeniffersouza/fastlocation/blob/main/Screenshot_1.png">
