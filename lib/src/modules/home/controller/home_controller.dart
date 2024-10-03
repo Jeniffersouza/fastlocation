@@ -1,5 +1,6 @@
 import 'package:mobx/mobx.dart';
 import 'package:fastlocation/src/modules/home/model/address_model.dart';
+import 'package:fastlocation/src/modules/home/service/address_service.dart';  // Atualização para usar o AddressService
 
 // Parte gerada automaticamente para MobX
 part 'home_controller.g.dart';
@@ -16,24 +17,26 @@ abstract class _HomeControllerBase with Store {
   @observable
   ObservableList<AddressModel> addresses = ObservableList<AddressModel>();
 
+  final AddressService _addressService = AddressService();  // Instância do AddressService
+
+
   // Atualize o método para aceitar um parâmetro
   @action
-  Future<void> fetchAddress(String cepInput) async {
-    cep = cepInput;  // Atribui o valor do CEP passado pelo TextField
+   Future<void> fetchAddress(String cepInput) async {
+    cep = cepInput;
     isLoading = true;
+
     try {
-      await Future.delayed(Duration(seconds: 2));
+      final address = await _addressService.fetchAddressByCep(cep);  // Chamada ao serviço
 
-      // Exemplo de um novo endereço
-      AddressModel newAddress = AddressModel(
-        street: 'Rua Exemplo',
-        city: 'Cidade Exemplo',
-        cep: cep,
-      );
-
-      addresses.add(newAddress);
-    } catch (error) {
-      // Tratar erros
+      if (address != null) {
+        addresses.add(address);  // Adiciona o endereço se encontrado
+      } else {
+        // Lógica de erro, se necessário (CEP inválido ou não encontrado)
+        print('Endereço não encontrado para o CEP: $cep');
+      }
+    } catch (e) {
+      print('Erro ao buscar endereço: $e');
     } finally {
       isLoading = false;
     }
