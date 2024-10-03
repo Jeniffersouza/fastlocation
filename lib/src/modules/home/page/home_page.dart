@@ -4,6 +4,7 @@ import 'package:fastlocation/src/modules/home/controller/home_controller.dart';
 import 'package:fastlocation/src/shared/components/loading_indicator.dart';
 
 class HomePage extends StatelessWidget {
+
   final HomeController controller = HomeController();
   final TextEditingController _cepController = TextEditingController();
 
@@ -27,7 +28,7 @@ class HomePage extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center, // Centraliza na vertical
-            crossAxisAlignment: CrossAxisAlignment.center, // Centraliza na horizontal
+            //crossAxisAlignment: CrossAxisAlignment.center, // Centraliza na horizontal
             children: [
               Text(
                         'Buscador de CEP',
@@ -43,7 +44,7 @@ class HomePage extends StatelessWidget {
                 decoration: InputDecoration(
                   labelText: 'Digite o CEP',
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+                  borderRadius: BorderRadius.circular(15.0),
                   ), // Estilo da borda do campo
                   labelStyle: TextStyle(
                     fontSize: 16,
@@ -89,49 +90,49 @@ class HomePage extends StatelessWidget {
 
               // Exibe o histórico dos 3 últimos endereços
               Observer(
-              builder: (_) {
-                if (controller.addressHistory.isNotEmpty) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.center, // Centraliza na horizontal
-                    children: [
-                      Text(
-                        'Histórico de endereços:',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                builder: (_) {
+                  if (controller.addressHistory.isNotEmpty) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Histórico de endereços:',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 8),
-                      Container(
-                        padding: EdgeInsets.all(8.0), // Adiciona um padding interno
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.blueAccent, width: 1.5), // Borda leve
-                          borderRadius: BorderRadius.circular(8.0), // Arredonda os cantos
+                        SizedBox(height: 8),
+                        Container(
+                          padding: EdgeInsets.all(8.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.blueAccent, width: 1.5),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: SizedBox(
+                            height: 100, // Defina uma altura fixa ou limite
+                            child: ListView.builder(
+                              itemCount: controller.addressHistory.length,
+                              itemBuilder: (context, index) {
+                                final address = controller.addressHistory[index];
+                                return ListTile(
+                                  title: Text('${address.street}, ${address.city}'),
+                                  subtitle: Text('CEP: ${address.cep}'),
+                                );
+                              },
+                            ),
+                          ),
                         ),
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: controller.addressHistory.length,
-                          itemBuilder: (context, index) {
-                            final address = controller.addressHistory[index];
-                            return ListTile(
-                              title: Text('${address.street}, ${address.city}'),
-                              subtitle: Text('CEP: ${address.cep}'),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  );
-                } else {
-                  return Text(
-                    'Nenhum endereço pesquisado ainda.',
-                    style: TextStyle(fontSize: 16, color: Colors.grey),
-                  );
-                }
-              },
-            ),
-
+                      ],
+                    );
+                  } else {
+                    return Text(
+                      'Nenhum endereço pesquisado ainda.',
+                      style: TextStyle(fontSize: 16, color: Colors.grey),
+                    );
+                  }
+                },
+              ),
             ],
           ),
         ),
